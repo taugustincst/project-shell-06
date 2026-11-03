@@ -43,4 +43,4 @@ npm install && node tests/smoke.js
 `localStorage` key `blackpool.v1`: three casebooks, per-case ink/pencil/notes, settings. Every entry is validated against the case on load (wrong ink is dropped, unknown figures ignored, at most three pencils); an unparseable save is copied to `blackpool.v1.backup` and the game starts fresh.
 
 ## Publishing
-Ships as a Trusted Web Activity (Ironhold pattern); the Android project is not in this repository yet. Pages deploys from `main` via `.github/workflows/pages.yml`; privacy policy at `privacy.html`. Store copy draft: `store/listing.md`. The brief requires a blind logic playtest by three non-authors before submission.
+A paid app on Google Play with the whole game packed inside it (`android/play`, see `PLAY.md`). Pages deploys only the store page from `main` (`site/index.html`, the privacy policy `privacy.html` and the store graphics), not the playable game. Store copy: `store/listing.md`. The brief requires a blind logic playtest by three non-authors before submission.
