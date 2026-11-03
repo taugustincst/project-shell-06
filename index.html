@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3ecdd">
+<meta name="description" content="The 9:15 to Blackpool: a casebook deduction puzzler. Six closed settings, manifests, timetables and interviews. Deduction, not guessing. Confirmed in threes.">
+<title>The 9:15 to Blackpool</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app" hidden>
+
+  <!-- Home: the shelf -->
+  <section id="screen-home" class="screen active">
+    <header class="masthead">
+      <div class="rule"></div>
+      <h1>The 9:15 to Blackpool</h1>
+      <p class="sub">A casebook in six parts · Deduction, not guessing · Confirmed in threes</p>
+      <div class="rule"></div>
+    </header>
+    <div class="slot-row">
+      <span class="label">Casebook</span>
+      <div class="seg" id="slots"><button data-slot="A" class="on">A</button><button data-slot="B">B</button><button data-slot="C">C</button></div>
+    </div>
+    <ol id="case-list" class="case-list"></ol>
+    <div class="card how">
+      <h2>How the book works</h2>
+      <p>Read the evidence. For each person, enter in pencil who they are, where they were, and whether their word can be trusted. You may hold <b>three entries in pencil</b> at once. When all three are right, they take ink together. When they are not, the book says nothing.</p>
+      <p>Every answer can be proved from the paper. Nothing here needs a guess.</p>
+    </div>
+    <div class="card">
+      <h2>Settings</h2>
+      <label class="row"><input type="checkbox" id="opt-large"> Large text</label>
+      <label class="row"><input type="checkbox" id="opt-contrast"> High contrast</label>
+      <div class="row-btns"><button class="btn" id="btn-clear-slot">Start this casebook again</button></div>
+    </div>
+    <footer class="foot">Version <span id="about-version">1.0.0</span> · <a href="privacy.html">Privacy</a> · © AugustInnovations LLC</footer>
+  </section>
+
+  <!-- A case -->
+  <section id="screen-case" class="screen">
+    <header class="casehead">
+      <button class="btn small" id="btn-back">‹ Shelf</button>
+      <div class="casehead-t"><h1 id="case-title"></h1><div class="sub" id="case-when"></div></div>
+      <div class="pencil" id="pencil-meter" title="Entries in pencil">✎ <span id="pencil-n">0</span>/3</div>
+    </header>
+    <nav class="tabs" role="tablist">
+      <button role="tab" class="tab active" data-tab="brief">Brief</button>
+      <button role="tab" class="tab" data-tab="evidence">Evidence</button>
+      <button role="tab" class="tab" data-tab="people">People</button>
+      <button role="tab" class="tab" data-tab="book">Book</button>
+      <button role="tab" class="tab" data-tab="notes">Notes</button>
+    </nav>
+    <div class="panels">
+      <div id="tab-brief" class="panel active"><div class="card paper"><div class="sub" id="brief-place"></div><p id="brief-intro"></p><p class="q" id="brief-question"></p><div class="progress"><i id="progress-bar"></i></div><div class="sub" id="progress-text"></div></div></div>
+      <div id="tab-evidence" class="panel"><ol id="evidence-list" class="ev-list"></ol></div>
+      <div id="tab-people" class="panel"><ol id="people-list" class="people"></ol></div>
+      <div id="tab-book" class="panel"><div class="sub book-help">✎ pencil · ✒ ink · tap a cell to enter it</div><table class="book" id="book-table"></table></div>
+      <div id="tab-notes" class="panel"><textarea id="notes" placeholder="Your own notes for this case. They are saved with the casebook." rows="14"></textarea></div>
+    </div>
+  </section>
+</div>
+
+<!-- Evidence reader -->
+<div class="modal" id="modal-evidence" hidden role="dialog" aria-modal="true"><div class="sheet paper">
+  <div class="sub" id="ev-kind"></div><h2 id="ev-title"></h2><p id="ev-text" class="ev-text"></p>
+  <div class="row-btns"><button class="btn" id="ev-prev">‹ Previous</button><button class="btn" id="ev-next">Next ›</button><button class="btn primary" id="ev-close">Close</button></div>
+</div></div>
+
+<!-- Person entry -->
+<div class="modal" id="modal-person" hidden role="dialog" aria-modal="true"><div class="sheet">
+  <h2 id="p-handle"></h2><p class="sub" id="p-desc"></p>
+  <div class="field"><label for="p-name">Who is this?</label><select id="p-name"></select><span class="state" id="p-name-state"></span></div>
+  <div class="field"><label for="p-where" id="p-where-label">Where were they?</label><select id="p-where"></select><span class="state" id="p-where-state"></span></div>
+  <div class="field"><label for="p-verdict">Their word</label><select id="p-verdict"><option value="">—</option><option value="truthful">Truthful: every claim is true</option><option value="liar">Lying: every claim is false</option><option value="culprit">The culprit (and lying)</option></select><span class="state" id="p-verdict-state"></span></div>
+  <p class="sub small" id="p-help"></p>
+  <div class="row-btns"><button class="btn" id="p-statement">Read their statement</button><button class="btn primary" id="p-close">Done</button></div>
+</div></div>
+
+<!-- Resolution -->
+<div class="modal" id="modal-resolution" hidden role="dialog" aria-modal="true"><div class="sheet paper">
+  <div class="sub">The book is in ink</div><h2 id="r-title"></h2><p id="r-text"></p><h3>The thread</h3><p id="r-thread"></p>
+  <div class="row-btns"><button class="btn primary" id="r-close">Close the case</button></div>
+</div></div>
+
+<div id="toast" class="toast" hidden></div>
+<script src="js/engine.js"></script>
+<script src="js/cases.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
