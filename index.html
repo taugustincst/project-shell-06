@@ -30,7 +30,8 @@
     <div class="card how">
       <h2>How the book works</h2>
       <p>Read the evidence. For each person, enter in pencil who they are, where they were, and whether their word can be trusted. You may hold <b>three entries in pencil</b> at once. When all three are right, they take ink together. When they are not, the book says nothing.</p>
-      <p>Every answer can be proved from the paper. Nothing here needs a guess.</p>
+      <p>Every answer can be proved from the paper. Nothing here needs a guess. The book keeps count of every three that does not take ink; a case closed with none is closed clean.</p>
+      <p>The first case is free. The other five are one purchase.</p>
     </div>
     <div class="card">
       <h2>Settings</h2>
@@ -38,7 +39,7 @@
       <label class="row"><input type="checkbox" id="opt-contrast"> High contrast</label>
       <div class="row-btns"><button class="btn" id="btn-clear-slot">Start this casebook again</button></div>
     </div>
-    <footer class="foot">Version <span id="about-version">1.0.0</span> · <a href="privacy.html">Privacy</a> · © AugustInnovations LLC</footer>
+    <footer class="foot">Version <span id="about-version">1.1.0</span> · <a href="privacy.html">Privacy</a> · © AugustInnovations LLC</footer>
   </section>
 
   <!-- A case -->
@@ -56,7 +57,7 @@
       <button role="tab" class="tab" data-tab="notes">Notes</button>
     </nav>
     <div class="panels">
-      <div id="tab-brief" class="panel active"><div class="card paper"><div class="sub" id="brief-place"></div><p id="brief-intro"></p><p class="q" id="brief-question"></p><div class="progress"><i id="progress-bar"></i></div><div class="sub" id="progress-text"></div></div></div>
+      <div id="tab-brief" class="panel active"><div class="card paper"><div class="sub" id="brief-place"></div><p id="brief-intro"></p><p class="q" id="brief-question"></p><div class="progress"><i id="progress-bar"></i></div><div class="sub" id="progress-text"></div><div class="row-btns"><button class="btn" id="btn-restart">Start this case again</button></div></div></div>
       <div id="tab-evidence" class="panel"><ol id="evidence-list" class="ev-list"></ol></div>
       <div id="tab-people" class="panel"><ol id="people-list" class="people"></ol></div>
       <div id="tab-book" class="panel"><div class="sub book-help">✎ pencil · ✒ ink · tap a cell to enter it</div><table class="book" id="book-table"></table></div>
@@ -83,13 +84,23 @@
 
 <!-- Resolution -->
 <div class="modal" id="modal-resolution" hidden role="dialog" aria-modal="true"><div class="sheet paper">
-  <div class="sub">The book is in ink</div><h2 id="r-title"></h2><p id="r-text"></p><h3>The thread</h3><p id="r-thread"></p>
+  <div class="sub">The book is in ink</div><h2 id="r-title"></h2><p id="r-text"></p><h3>The thread</h3><p id="r-thread"></p><p class="sub" id="r-record"></p>
   <div class="row-btns"><button class="btn primary" id="r-close">Close the case</button></div>
 </div></div>
 
-<div id="toast" class="toast" hidden></div>
+<!-- The full casebook -->
+<div class="modal" id="modal-unlock" hidden role="dialog" aria-modal="true" aria-labelledby="u-title"><div class="sheet paper">
+  <div class="sub" id="u-kicker">The full casebook</div><h2 id="u-title">Five more cases, one culprit</h2>
+  <p>The fête at Little Eccleston, the Grace Dieu in fog, New Year at the Imperial, the circus special at Carnforth, and the 9:15 a year on, where the thread is tied off.</p>
+  <p class="sub">One purchase through Google Play. No ads and nothing else to buy.</p>
+  <p class="note" id="u-note" hidden></p>
+  <div class="row-btns col"><button class="btn primary" id="u-buy">Unlock the full casebook</button><button class="btn" id="u-restore">Restore purchase</button><button class="btn" id="u-later">Not now</button></div>
+</div></div>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 <script src="js/engine.js"></script>
 <script src="js/cases.js"></script>
+<script src="js/billing.js"></script>
 <script src="js/game.js"></script>
 </body>
 </html>

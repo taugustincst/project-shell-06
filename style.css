@@ -33,7 +33,7 @@ h1, h2, h3 { margin: 0; font-weight: 600; } .sub { color: var(--muted); font-siz
 table.book { width: 100%; border-collapse: collapse; font-size: 0.85rem; } .book th { text-align: left; font-weight: 600; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 4px; border-bottom: 1px solid var(--ink); }
 .book td { border-bottom: 1px solid var(--line); padding: 0; vertical-align: top; } .book td.h { padding: 8px 4px; font-weight: 600; width: 34%; }
 .book td button { width: 100%; min-height: 44px; border: 0; background: transparent; text-align: left; padding: 6px 4px; cursor: pointer; font-size: 0.82rem; line-height: 1.25; }
-.book .pencil-e { color: var(--pencil); font-style: italic; } .book .ink-e { color: var(--inkblue); font-weight: 600; } .book .blank { color: var(--line); }
+.book .pencil-e { color: var(--pencil); font-style: italic; } .book .ink-e { color: var(--inkblue); font-weight: 600; } .book .blank { color: var(--muted); } .book .blank span { display: block; border: 1px dashed var(--line); border-radius: 6px; min-height: 30px; margin: 1px 3px 1px 0; text-align: center; line-height: 28px; font-size: 1rem; }
 .book-help { margin-bottom: 6px; }
 textarea { width: 100%; font: inherit; padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper-2); color: var(--ink); }
 .modal { position: fixed; inset: 0; background: rgba(30, 24, 16, 0.55); display: flex; align-items: flex-end; justify-content: center; z-index: 20; }
@@ -43,4 +43,10 @@ textarea { width: 100%; font: inherit; padding: 10px; border-radius: 10px; borde
 .field { margin: 10px 0; } .field label { display: block; font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.08em; }
 select { width: 100%; font: inherit; padding: 10px; border-radius: 8px; background: var(--paper-2); color: var(--ink); border: 1px solid var(--line); } select:disabled { color: var(--inkblue); font-weight: 600; opacity: 1; }
 .state { display: block; font-size: 0.8rem; color: var(--muted); margin-top: 3px; } .state.ink { color: var(--inkblue); font-weight: 600; }
-.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 10px; z-index: 30; font-size: 0.9rem; max-width: 90%; }
+.toast { position: fixed; left: 50%; top: calc(14px + env(safe-area-inset-top)); pointer-events: none; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 10px; z-index: 30; font-size: 0.9rem; max-width: 90%; }
+/* the full casebook */
+.row-btns.col { flex-direction: column; } .row-btns.col .btn { width: 100%; }
+.btn:disabled { opacity: 0.5; cursor: default; }
+.note { border-left: 3px solid var(--accent); padding: 6px 10px; background: var(--paper-2); font-size: 0.9rem; }
+.case-list li.paid .pct { font-size: 0.8rem; color: var(--accent); text-align: right; max-width: 5.5rem; line-height: 1.2; }
+#r-record { margin-top: 12px; font-style: italic; }

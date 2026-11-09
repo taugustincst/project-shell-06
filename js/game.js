@@ -1,10 +1,12 @@
 /* The 9:15 to Blackpool — UI, save, casebook slots. The deduction logic lives in engine.js; the cases in cases.js. */
 (function () {
 'use strict';
-const E = window.BP, CASES = window.BP_CASES, VERSION = '1.0.0', SAVE_KEY = 'blackpool.v1', BACKUP_KEY = 'blackpool.v1.backup';
+const E = window.BP, CASES = window.BP_CASES, VERSION = '1.1.0', SAVE_KEY = 'blackpool.v1', BACKUP_KEY = 'blackpool.v1.backup';
 const $ = id => document.getElementById(id);
 const caseById = {}; CASES.forEach(c => { caseById[c.id] = c; });
 const KINDS = { document: 'Document', object: 'Object', statement: 'Statement' };
+const FREE_CASE = 'train';
+const BILL = window.createBilling({ storageKey: 'blackpool.unlock', productId: 'full_unlock' });
 
 /* ---------- profile ---------- */
 let P = null; // { v, slot, books: {A:{caseId: book}}, done: {A:{caseId:true}}, settings }
@@ -24,18 +26,22 @@ function load() {
 function save() { try { localStorage.setItem(SAVE_KEY, JSON.stringify(P)); } catch (e) { } }
 function book(c) { const bs = P.books[P.slot]; if (!bs[c.id]) bs[c.id] = E.newBook(c); return bs[c.id]; }
 function finaleOpen() { return CASES.filter(c => c.id !== 'finale').every(c => P.done[P.slot][c.id]); }
+const paidCase = c => c.id !== FREE_CASE && !BILL.state.owned;
+// Threes put to the book that did not take ink. The book never says which entry was wrong; it only keeps count.
+function falseStarts(b) { return Math.max(0, (b.checks || 0) - Math.floor(Object.keys(b.ink).length / 3)); }
 
 /* ---------- home ---------- */
 function renderHome() {
   document.querySelectorAll('#slots button').forEach(b => b.classList.toggle('on', b.dataset.slot === P.slot));
   const ol = $('case-list'); ol.innerHTML = '';
   for (const c of CASES) {
-    const b = P.books[P.slot][c.id]; const pct = b ? Math.round(E.progress(c, b) * 100) : 0; const locked = c.id === 'finale' && !finaleOpen();
-    const li = document.createElement('li'); li.className = (locked ? 'locked' : '') + (P.done[P.slot][c.id] ? ' done' : '');
+    const b = P.books[P.slot][c.id]; const pct = b ? Math.round(E.progress(c, b) * 100) : 0; const paid = paidCase(c); const locked = !paid && c.id === 'finale' && !finaleOpen();
+    const li = document.createElement('li'); li.className = (locked ? 'locked' : '') + (paid ? ' paid' : '') + (P.done[P.slot][c.id] ? ' done' : '');
     li.innerHTML = `<button ${locked ? 'disabled' : ''}><span class="num">${c.n}</span><span><span class="t"></span><br><span class="w"></span></span><span class="pct"></span></button>`;
     li.querySelector('.t').textContent = c.title; li.querySelector('.w').textContent = locked ? 'Opens when the first five cases are in ink' : c.when;
-    li.querySelector('.pct').textContent = P.done[P.slot][c.id] ? 'In ink' : pct ? pct + '%' : '';
-    if (!locked) li.querySelector('button').addEventListener('click', () => openCase(c.id));
+    li.querySelector('.pct').textContent = paid ? 'Full casebook' : P.done[P.slot][c.id] ? (b && falseStarts(b) === 0 && b.checks > 0 ? 'In ink · clean' : 'In ink') : pct ? pct + '%' : '';
+    if (paid) li.querySelector('button').addEventListener('click', () => showUnlock('shelf', c.id));
+    else if (!locked) li.querySelector('button').addEventListener('click', () => openCase(c.id));
     ol.appendChild(li);
   }
 }
@@ -43,6 +49,7 @@ function renderHome() {
 /* ---------- case ---------- */
 let C = null, B = null, tab = 'brief', evIndex = 0, personId = null;
 function openCase(id) {
+  if (paidCase(caseById[id])) { showUnlock('shelf', id); return; }
   C = caseById[id]; B = book(C);
   $('case-title').textContent = C.title; $('case-when').textContent = C.when;
   $('brief-place').textContent = C.place; $('brief-intro').textContent = C.intro; $('brief-question').textContent = C.question;
@@ -50,6 +57,10 @@ function openCase(id) {
   renderEvidence(); renderPeople(); renderBook(); renderMeter();
   $('screen-home').classList.remove('active'); $('screen-case').classList.add('active'); setTab(B.done ? 'book' : (Object.keys(B.ink).length ? 'book' : 'brief'));
   window.scrollTo(0, 0);
+}
+function restartCase() {
+  if (!C || !confirm(`Rub out every entry in "${C.title}" and start it again? Your other cases are not touched.`)) return;
+  const id = C.id; P.books[P.slot][id] = E.newBook(C); delete P.done[P.slot][id]; save(); openCase(id); setTab('brief'); toast('This case is blank again.');
 }
 function closeCase() { save(); C = null; B = null; $('screen-case').classList.remove('active'); $('screen-home').classList.add('active'); renderHome(); }
 function setTab(t) { tab = t; document.querySelectorAll('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === t)); document.querySelectorAll('.panel').forEach(p => p.classList.toggle('active', p.id === 'tab-' + t)); if (t === 'book') renderBook(); if (t === 'people') renderPeople(); }
@@ -74,7 +85,7 @@ function renderBook() {
   const t = $('book-table'); t.innerHTML = '<tr><th>Person</th><th>Name</th><th>Where</th><th>Word</th></tr>';
   for (const fg of C.figures) {
     const tr = document.createElement('tr'); const th = document.createElement('td'); th.className = 'h'; th.textContent = fg.handle; tr.appendChild(th);
-    for (const f of E.FIELDS) { const st = entryState(fg.id, f); const td = document.createElement('td'); const b = document.createElement('button'); b.className = st.s === 'ink' ? 'ink-e' : st.s === 'pencil' ? 'pencil-e' : 'blank'; b.textContent = st.s === 'blank' ? '·' : (f === 'verdict' ? VLABEL[st.v] : st.v); b.addEventListener('click', () => showPerson(fg.id, f)); td.appendChild(b); tr.appendChild(td); }
+    for (const f of E.FIELDS) { const st = entryState(fg.id, f); const td = document.createElement('td'); const b = document.createElement('button'); b.className = st.s === 'ink' ? 'ink-e' : st.s === 'pencil' ? 'pencil-e' : 'blank'; if (st.s === 'blank') { const sp = document.createElement('span'); sp.textContent = '+'; b.appendChild(sp); b.setAttribute('aria-label', `${fg.handle}: ${f === 'verdict' ? 'their word' : f}, blank`); } else b.textContent = f === 'verdict' ? VLABEL[st.v] : st.v; b.addEventListener('click', () => showPerson(fg.id, f)); td.appendChild(b); tr.appendChild(td); }
     t.appendChild(tr);
   }
   renderMeter();
@@ -97,7 +108,34 @@ function onEntry(f) {
   save(); showPerson(personId); renderPeople(); renderBook();
   if (B.done) { P.done[P.slot][C.id] = true; save(); setTimeout(showResolution, 600); }
 }
-function showResolution() { $('modal-person').hidden = true; $('r-title').textContent = C.title; $('r-text').textContent = C.resolution; $('r-thread').textContent = C.thread; $('modal-resolution').hidden = false; }
+function showResolution() {
+  $('modal-person').hidden = true; $('r-title').textContent = C.title; $('r-text').textContent = C.resolution; $('r-thread').textContent = C.thread;
+  const n = falseStarts(B); $('r-record').textContent = n === 0 ? 'Closed clean: every three you put to the book took ink.' : `Closed after ${n} ${n === 1 ? 'three that' : 'threes that'} did not take ink.`;
+  $('modal-resolution').hidden = false;
+}
+
+/* ---------- the full casebook (one Google Play purchase) ---------- */
+let unlockReason = null, unlockCase = null;
+function showUnlock(reason, caseId) { unlockReason = reason; unlockCase = caseId || null; renderUnlock(); $('modal-unlock').hidden = false; }
+function renderUnlock() {
+  const b = BILL.state, note = $('u-note');
+  $('u-kicker').textContent = unlockReason === 'after-first' ? 'The thread goes on' : 'The full casebook';
+  let msg = '';
+  if (!b.available) msg = 'The full casebook is unlocked in the Google Play edition of the game.';
+  else if (b.pending) msg = 'Your purchase is waiting for the payment to clear. The cases open as soon as Google Play confirms it.';
+  else if (b.error) msg = b.error;
+  else if (b.busy) msg = 'Waiting for Google Play…';
+  note.hidden = !msg; note.textContent = msg;
+  $('u-buy').textContent = b.price ? `Unlock the full casebook · ${b.price}` : 'Unlock the full casebook';
+  $('u-buy').disabled = !b.available || b.busy || b.pending || b.owned; $('u-restore').disabled = !b.available || b.busy;
+}
+function unlocked() {
+  renderHome();
+  if ($('modal-unlock').hidden) return;
+  $('modal-unlock').hidden = true; toast('The full casebook is yours. Thank you.');
+  const id = unlockCase; unlockReason = null; unlockCase = null;
+  if (id && $('screen-home').classList.contains('active')) openCase(id);
+}
 let toastTimer = 0; function toast(m) { const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 2600); }
 function applySettings() { document.documentElement.classList.toggle('large', P.settings.large); document.documentElement.classList.toggle('contrast', P.settings.contrast); $('opt-large').checked = P.settings.large; $('opt-contrast').checked = P.settings.contrast; }
 
@@ -113,15 +151,20 @@ function init() {
   for (const f of E.FIELDS) $('p-' + f).addEventListener('change', () => onEntry(f));
   $('p-close').addEventListener('click', () => { $('modal-person').hidden = true; });
   $('p-statement').addEventListener('click', () => { const i = C.evidence.findIndex(e => e.speaker === personId); if (i >= 0) showEvidence(i); });
-  $('r-close').addEventListener('click', () => { $('modal-resolution').hidden = true; closeCase(); });
+  $('r-close').addEventListener('click', () => { const first = C && C.id === FREE_CASE; $('modal-resolution').hidden = true; closeCase(); if (first && !BILL.state.owned) showUnlock('after-first', 'fete'); });
+  $('btn-restart').addEventListener('click', restartCase);
+  $('u-buy').addEventListener('click', () => { BILL.buy(); renderUnlock(); });
+  $('u-restore').addEventListener('click', () => { BILL.restore(); renderUnlock(); });
+  $('u-later').addEventListener('click', () => { $('modal-unlock').hidden = true; unlockReason = null; unlockCase = null; });
+  BILL.onChange(st => { if (st.owned) unlocked(); else { if (!$('modal-unlock').hidden) renderUnlock(); renderHome(); } });
   $('notes').addEventListener('input', () => { if (B) { B.notes = $('notes').value.slice(0, 4000); } }); $('notes').addEventListener('change', save);
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') save(); }); window.addEventListener('pagehide', save);
-  renderHome(); $('app').hidden = false;
+  renderHome(); $('app').hidden = false; BILL.start();
   if ('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('sw.js').catch(() => { });
 }
 /* Test API for the validator-in-browser, staging and the smoke test. */
 window.__blackpool = {
-  E, CASES, VERSION, get profile() { return P; }, get book() { return B; }, get case() { return C; },
+  E, CASES, VERSION, billing: BILL, get profile() { return P; }, get book() { return B; }, get case() { return C; },
   loadCase: openCase, closeCase, setTab, set(p, f, v) { const r = E.setPencil(C, B, p, f, v); save(); renderPeople(); renderBook(); if (B.done) { P.done[P.slot][C.id] = true; save(); showResolution(); } return r; },
   fillInk(keys) { const sol = E.solutionOf(C); for (const k of keys) { const [p, f] = k.split('.'); B.ink[k] = sol[p][f]; delete B.pencil[k]; } B.done = Object.keys(B.ink).length === C.figures.length * 3; if (B.done) P.done[P.slot][C.id] = true; save(); renderPeople(); renderBook(); },
   solveAll() { const sol = E.solutionOf(C); for (const fg of C.figures) for (const f of E.FIELDS) B.ink[E.key(fg.id, f)] = sol[fg.id][f]; B.pencil = {}; B.done = true; P.done[P.slot][C.id] = true; save(); renderBook(); showResolution(); },

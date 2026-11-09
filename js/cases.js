@@ -7,7 +7,7 @@ const L = (p, f, v) => ({ p, f, v });
 const CASES = [
 /* ============================ CASE 1 ============================ */
 {
-  id: 'train', n: 1, title: 'The 9:15 to Blackpool', when: 'Friday 12 October 1934', place: 'The 9:15 pm Manchester Victoria to Blackpool North, standing at Preston',
+  id: 'train', n: 1, title: 'The 9:15 to Blackpool', when: 'Friday 25 May 1934', place: 'The 9:15 pm Manchester Victoria to Blackpool North, standing at Preston',
   intro: 'A jewel case belonging to Mrs Dorothea Haslam of Lytham was taken from Compartment C of the 9:15 while the train stood at Preston, 9:58 to 10:04 pm. The window was shut, the blind was down, the corridor door was ajar. Eight people were aboard the coach. Lancashire Constabulary have taken statements, gathered the paper, and handed you the book.',
   question: 'For each person: who they are, where they were while the train stood at Preston, and whether their statement is to be trusted. One of them took the case.',
   names: ['Walter Pym', 'Dorothea Haslam', 'Leonard Crane', 'Arthur Dell', 'Jack Tomlinson', 'Edie Tomlinson', 'Sidney Foulkes', 'Peter Ashworth'],
@@ -34,7 +34,7 @@ const CASES = [
       c: [{ t: 'is', p: 'f7', f: 'name', v: 'Sidney Foulkes' }, { t: 'is', p: 'f3', f: 'name', v: 'Leonard Crane' }, { t: 'is', p: 'f2', f: 'name', v: 'Dorothea Haslam' }] },
     { id: 'stub', kind: 'object', title: 'Ticket stub found on the floor of Compartment C', text: 'Third class single, Manchester Victoria to Blackpool North, serial 4471. Punched at Preston, 10.01. Found by the police under the seat nearest the corridor door, Compartment C.',
       c: [] },
-    { id: 'register', kind: 'document', title: 'Booking office register, Victoria, 12 October', text: '… 4469 Blackpool N. single, 8.44 pm, Mrs Haslam (first). 4470 Blackpool N. return, 8.47 pm, Rev. Dell (clerical). 4471 Blackpool N. single, 8.50 pm, Mr L. Crane (third). 4472 Blackpool N. single, 8.52 pm, Master Ashworth (half) …',
+    { id: 'register', kind: 'document', title: 'Booking office register, Victoria, 25 May', text: '… 4469 Blackpool N. single, 8.44 pm, Mrs Haslam (first). 4470 Blackpool N. return, 8.47 pm, Rev. Dell (clerical). 4471 Blackpool N. single, 8.50 pm, Mr L. Crane (third). 4472 Blackpool N. single, 8.52 pm, Master Ashworth (half) …',
       c: [{ t: 'named', name: 'Leonard Crane', f: 'where', v: 'Compartment C' }] },
     { id: 'surgeon', kind: 'document', title: 'Note from the Preston station inspector', text: 'The case was taken between 9.58 and 10.03 from the rack in Compartment C. The window was shut and the blind drawn; the platform side could not be reached from outside. Whoever took it was inside the compartment. I observed, from the platform, a man in a loud tie smoking in the corridor by the open door of Coach 3 for the whole of the stop.',
       c: [{ t: 'culpritwhere', v: 'Compartment C' }, { t: 'is', p: 'f7', f: 'where', v: 'the corridor' }] },
@@ -62,7 +62,7 @@ const CASES = [
 },
 /* ============================ CASE 2 ============================ */
 {
-  id: 'fete', n: 2, title: 'The Fête at Little Eccleston', when: 'Saturday 1 June 1935', place: 'The vicarage field, Little Eccleston, during the terrier judging, 3.00 to 3.20 pm',
+  id: 'fete', n: 2, title: 'The Fête at Little Eccleston', when: 'Saturday 2 June 1934', place: 'The vicarage field, Little Eccleston, during the terrier judging, 3.00 to 3.20 pm',
   intro: 'The fête takings, thirty-one pounds in a Huntley & Palmers tin, were taken from the trestle in the vicarage tent while the brass band played the Poet and Peasant selection and the vicar judged the terriers. Nine people had business on that field. The tin has not been found. The vicar would like it found before the bishop hears.',
   question: 'For each person: who they are, where they were during the selection, and whether their statement can be trusted. One of them took the tin.',
   names: ['Hubert Ames', 'Constance Ames', 'Tom Rushworth', 'Harold Benn', 'Albert Fairclough', 'Ivy Platt', 'George Lund', 'Nancy Lund', 'Dan Whitlow'],
@@ -79,7 +79,7 @@ const CASES = [
     { id: 'f9', handle: 'The man with the dog and the gun', desc: 'Tweeds, a broken shotgun over his arm, a spaniel that will not leave the girl in yellow alone.', name: 'Dan Whitlow', where: 'the field gate', verdict: 'truthful' }
   ],
   evidence: [
-    { id: 'programme', kind: 'document', title: 'Fête programme', text: 'LITTLE ECCLESTON SUMMER FÊTE · Vicarage Field · 1 June. 2.00 Opening by the Vicar, the Rev. H. Ames. 2.30 Teas (Women\'s Institute, Mrs C. Ames). 3.00 Terrier judging (Judge: the Vicar. Steward: Miss I. Platt). 3.00 Selection, "Poet and Peasant", Little Eccleston Silver Band (Bandmaster A. Fairclough; solo cornet H. Benn). Coconut shy all afternoon. Refreshments by kind permission of G. Lund, the Plough Inn.',
+    { id: 'programme', kind: 'document', title: 'Fête programme', text: 'LITTLE ECCLESTON SUMMER FÊTE · Vicarage Field · 2 June. 2.00 Opening by the Vicar, the Rev. H. Ames. 2.30 Teas (Women\'s Institute, Mrs C. Ames). 3.00 Terrier judging (Judge: the Vicar. Steward: Miss I. Platt). 3.00 Selection, "Poet and Peasant", Little Eccleston Silver Band (Bandmaster A. Fairclough; solo cornet H. Benn). Coconut shy all afternoon. Refreshments by kind permission of G. Lund, the Plough Inn.',
       c: [{ t: 'is', p: 'f1', f: 'name', v: 'Hubert Ames' }, { t: 'is', p: 'f5', f: 'name', v: 'Albert Fairclough' }, { t: 'is', p: 'f4', f: 'name', v: 'Harold Benn' },
           { t: 'not', p: 'f2', f: 'name', v: 'Tom Rushworth' }, { t: 'not', p: 'f2', f: 'name', v: 'George Lund' }, { t: 'not', p: 'f2', f: 'name', v: 'Dan Whitlow' },
           { t: 'not', p: 'f6', f: 'name', v: 'Tom Rushworth' }, { t: 'not', p: 'f6', f: 'name', v: 'George Lund' }, { t: 'not', p: 'f6', f: 'name', v: 'Dan Whitlow' },
@@ -87,7 +87,7 @@ const CASES = [
           { t: 'not', p: 'f3', f: 'name', v: 'Constance Ames' }, { t: 'not', p: 'f3', f: 'name', v: 'Ivy Platt' }, { t: 'not', p: 'f3', f: 'name', v: 'Nancy Lund' },
           { t: 'not', p: 'f7', f: 'name', v: 'Constance Ames' }, { t: 'not', p: 'f7', f: 'name', v: 'Ivy Platt' }, { t: 'not', p: 'f7', f: 'name', v: 'Nancy Lund' },
           { t: 'not', p: 'f9', f: 'name', v: 'Constance Ames' }, { t: 'not', p: 'f9', f: 'name', v: 'Ivy Platt' }, { t: 'not', p: 'f9', f: 'name', v: 'Nancy Lund' }] },
-    { id: 'register', kind: 'document', title: 'Parish register of officers, 1935', text: 'Vicar: the Rev. Hubert Ames. Verger and sexton: Thomas Rushworth (with the keys to the vicarage tent, the church, and the bier house).',
+    { id: 'register', kind: 'document', title: 'Parish register of officers, 1934', text: 'Vicar: the Rev. Hubert Ames. Verger and sexton: Thomas Rushworth (with the keys to the vicarage tent, the church, and the bier house).',
       c: [{ t: 'is', p: 'f3', f: 'name', v: 'Tom Rushworth' }] },
     { id: 'photo', kind: 'object', title: 'Photograph, Lancashire Evening Post', text: 'Captioned "The Silver Band in full voice, 3.05 pm." The bandstand: the bandmaster with his baton raised, nine players in braid, and at the front an empty chair with a music stand and no cornet on it.',
       c: [{ t: 'is', p: 'f5', f: 'where', v: 'the bandstand' }, { t: 'not', p: 'f4', f: 'where', v: 'the bandstand' }] },
@@ -123,7 +123,7 @@ const CASES = [
 },
 /* ============================ CASE 3 ============================ */
 {
-  id: 'trawler', n: 3, title: 'The Grace Dieu in Fog', when: 'Tuesday 5 February 1935', place: 'The steam trawler Grace Dieu of Fleetwood, hove to in fog off the Lune Deep, 2.00 to 2.30 am',
+  id: 'trawler', n: 3, title: 'The Grace Dieu in Fog', when: 'Tuesday 6 November 1934', place: 'The steam trawler Grace Dieu of Fleetwood, hove to in fog off the Lune Deep, 2.00 to 2.30 am',
   intro: 'The mate of the Grace Dieu was struck from behind in the galley and the ship\'s money box, with the crew\'s settlement in it, was taken, while the trawler lay stopped in fog with the whistle going. Eight men were aboard. Nobody could have come or gone. The box has not been found, and the fog has not lifted.',
   question: 'For each man: who he is, where he was while the ship lay hove to, and whether his statement is to be trusted. One of them struck the mate.',
   names: ['Isaac Bramwell', 'Joseph Tatlock', 'Ellis Ward', 'Frank Dunne', 'Billy Mort', 'Ray Fell', 'Silas Grieve', 'Philip Oates'],
@@ -174,7 +174,7 @@ const CASES = [
 },
 /* ============================ CASE 4 ============================ */
 {
-  id: 'hotel', n: 4, title: 'New Year at the Imperial', when: 'Tuesday 31 December 1934', place: 'The Imperial Hotel, Blackpool, during the midnight fireworks, 11.55 pm to 12.10 am',
+  id: 'hotel', n: 4, title: 'New Year at the Imperial', when: 'Monday 31 December 1934', place: 'The Imperial Hotel, Blackpool, during the midnight fireworks, 11.55 pm to 12.10 am',
   intro: 'While the whole hotel watched the fireworks over the sea, somebody took the manager\'s key from the front desk, went up to the mezzanine office, and emptied the safe of four hundred pounds in guests\' valuables. Ten people are of interest. The fireworks were very good; nobody looked at anything else for fifteen minutes.',
   question: 'For each person: who they are, where they were during the fireworks, and whether their statement can be trusted. One of them opened the safe.',
   names: ['Cyril Vane', 'Edna Pryce', 'Albert Scoles', 'Mary Kehoe', 'Phyllis Garrow', 'Vera Lamb', 'Rupert Garrow', 'Ellen Marsh', 'Maurice Pelham', 'Len Astley'],
@@ -234,7 +234,7 @@ const CASES = [
       c: [{ t: 'says', s: 'f10', l: L('f10', 'where', 'the ballroom') }, { t: 'says', s: 'f10', l: L('f6', 'where', 'the kitchens') }] }
   ],
   resolution: 'Phyllis Garrow lifted the key from the desk hook while forty-one people shook her host\'s hand, went up the mezzanine stairs while every head was turned to the sea, and was down again with four hundred pounds in a silver wrap before the last rocket. Her uncle lied for her out of habit; the singer lied about the kitchens out of pride; the porter lied about the lift out of shame. The valuables were in the hatbox of Room 212, under a hat.',
-  thread: 'Miss Garrow is not Colonel Garrow\'s niece. She is nobody\'s niece. In her room: a typed list of six dates and six places, four of them already past, in the same typeface as a letter you have seen before. Against the first date, in pencil, a left-handed tick.'
+  thread: 'Miss Garrow is not Colonel Garrow\'s niece. She is nobody\'s niece. In her room: a typed list of six dates and six places, three of them already past, in the same typeface as a letter you have seen before. Against the first date, in pencil, a left-handed tick.'
 },
 /* ============================ CASE 5 ============================ */
 {
@@ -293,11 +293,11 @@ const CASES = [
       c: [{ t: 'says', s: 'f10', l: L('f10', 'where', 'the sidings') }, { t: 'says', s: 'f10', l: L('f1', 'where', 'the sidings') }] }
   ],
   resolution: 'Desmond Rye locked himself into the pay wagon before the shunt began, with his own key, and sat in the dark with the strongbox and the Captain\'s revolver while the shunter watched the only door and saw exactly what he was meant to see: nothing. He came out at breakfast with the keys on their chain and a story about sleeping. The clown lied about the bottle and Lena Varga lied about the elephants, and neither of them was in the pay wagon. The box was in the lion wagon\'s meat locker, where nobody but Captain Marr would ever look, and the Captain had been told not to.',
-  thread: 'Rye has not been an advance agent for four years. He has been a collector: of a cricket bag, a fête tin, a trawler\'s settlement, a hotel safe. He kept a ledger. Each entry is addressed to the same man at a poste restante in Fleetwood, and the ledger\'s last line is a train: the 9:15, 11 October, a strongbox in the guard\'s van, and the words "Mr L. will attend in person this time."'
+  thread: 'Rye has not been an advance agent for four years. He has been a collector: of a cricket bag, a fête tin, a trawler\'s settlement, a hotel safe. He kept a ledger. Each entry is addressed to the same man at a poste restante in Fleetwood, and the ledger\'s last line is a train: the 9:15, 24 May, a strongbox in the guard\'s van, and the words "Mr L. will attend in person this time."'
 },
 /* ============================ CASE 6 ============================ */
 {
-  id: 'finale', n: 6, title: 'The 9:15, a Year On', when: 'Friday 11 October 1935', place: 'The 9:15 pm Manchester Victoria to Blackpool North, standing at Preston, a year to the week',
+  id: 'finale', n: 6, title: 'The 9:15, a Year On', when: 'Friday 24 May 1935', place: 'The 9:15 pm Manchester Victoria to Blackpool North, standing at Preston, a year to the week',
   intro: 'The Fleetwood Steam Ferry Company\'s wages strongbox travelled in the guard\'s van of the 9:15, under the guard\'s eye and the escort of a company messenger. At Preston the guard was handed a cup of cocoa by a passenger, drank it, and woke at Kirkham on the van floor with the box gone. Ten people were in Coach 3 and the van. Some of them you have met before. One of them you have been following for a year.',
   question: 'For each person: who they are, where they were while the train stood at Preston, and whether their statement can be trusted. One of them is the man with the missing finger.',
   names: ['Walter Pym', 'Sidney Foulkes', 'Alfred Lathom', 'Henry Quayle', 'Gordon Ashe', 'Nora Brindle', 'Ted Royle', 'Peter Ashworth', 'Dorothea Haslam', 'Edie Tomlinson'],
@@ -315,7 +315,7 @@ const CASES = [
     { id: 'f10', handle: 'The young woman with the cigarette case', desc: 'The same cigarette case, engraved E.T., and no husband with her this time.', name: 'Edie Tomlinson', where: 'the corridor', verdict: 'liar' }
   ],
   evidence: [
-    { id: 'manifest', kind: 'document', title: 'Reserved seats, 9:15 Victoria–Blackpool North, 11 October', text: 'Coach 3. Compartment A: Mrs E. Tomlinson (1). Compartment B: Mr H. Quayle; Mr G. Ashe and dog (2). Compartment C: Mrs D. Haslam, Master P. Ashworth (2). Unreserved: Mr A. Lathom, Mr S. Foulkes, Miss N. Brindle. Van: Mr T. Royle, Fleetwood Steam Ferry Co., escorting consignment. Guard: W. Pym.',
+    { id: 'manifest', kind: 'document', title: 'Reserved seats, 9:15 Victoria–Blackpool North, 24 May', text: 'Coach 3. Compartment A: Mrs E. Tomlinson (1). Compartment B: Mr H. Quayle; Mr G. Ashe and dog (2). Compartment C: Mrs D. Haslam, Master P. Ashworth (2). Unreserved: Mr A. Lathom, Mr S. Foulkes, Miss N. Brindle. Van: Mr T. Royle, Fleetwood Steam Ferry Co., escorting consignment. Guard: W. Pym.',
       c: [{ t: 'is', p: 'f1', f: 'name', v: 'Walter Pym' }, { t: 'is', p: 'f2', f: 'name', v: 'Sidney Foulkes' }, { t: 'is', p: 'f5', f: 'name', v: 'Gordon Ashe' }, { t: 'is', p: 'f7', f: 'name', v: 'Ted Royle' }, { t: 'is', p: 'f8', f: 'name', v: 'Peter Ashworth' }, { t: 'is', p: 'f9', f: 'name', v: 'Dorothea Haslam' }, { t: 'is', p: 'f10', f: 'name', v: 'Edie Tomlinson' },
           { t: 'not', p: 'f3', f: 'name', v: 'Nora Brindle' }, { t: 'not', p: 'f4', f: 'name', v: 'Nora Brindle' }, { t: 'not', p: 'f6', f: 'name', v: 'Alfred Lathom' }, { t: 'not', p: 'f6', f: 'name', v: 'Henry Quayle' }] },
     { id: 'warrant', kind: 'document', title: 'Lancashire Constabulary, duty note', text: 'Sergeant N. Brindle, plain clothes, to travel on the 9:15 and observe the man calling himself Lathom, believed to be the principal in the Haslam, Little Eccleston, Grace Dieu, Imperial Hotel and Carnforth matters. Description: medium height, grey, gloved; the left little finger is missing to the second joint. Do not approach. Preston inspector to confirm the sergeant\'s position at the stop.',
