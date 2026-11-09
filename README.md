@@ -2,7 +2,7 @@
 
 **A casebook deduction puzzler.** One closed setting per case: a night train, a village fête, a trawler in fog, a grand hotel, a circus special, and the 9:15 again a year on. Manifests, timetables, ticket stubs, logbooks, interviews. You fill the casebook: who is who, who was where, who is lying. The book confirms only in sets of three correct entries, so brute force fails and real inference wins. Six cases. One culprit.
 
-Paid on Google Play at $3.99, a book you play. No ads, no in-app purchases, fully offline.
+Free on Google Play with the first case to play; one in-app purchase ($3.99) opens the other five. A book you play. No ads, fully offline.
 
 Status: **v1.0.0 draft built 2026-11-03**, not yet submitted. Build brief and the living log are in [HANDOFF.md](HANDOFF.md). Plan and verification in [tasks/todo.md](tasks/todo.md); lessons in [tasks/lessons.md](tasks/lessons.md). Repo rename at ship time (Tj's call).
 
@@ -43,4 +43,4 @@ npm install && node tests/smoke.js
 `localStorage` key `blackpool.v1`: three casebooks, per-case ink/pencil/notes, settings. Every entry is validated against the case on load (wrong ink is dropped, unknown figures ignored, at most three pencils); an unparseable save is copied to `blackpool.v1.backup` and the game starts fresh.
 
 ## Publishing
-A paid app on Google Play with the whole game packed inside it (`android/play`, see `PLAY.md`). Pages deploys only the store page from `main` (`site/index.html`, the privacy policy `privacy.html` and the store graphics), not the playable game. Store copy: `store/listing.md`. The brief requires a blind logic playtest by three non-authors before submission.
+A free app on Google Play, with a one-time unlock for cases two to six, and the whole game packed inside it (`android/play`, see `PLAY.md`). Pages deploys only the store page from `main` (`site/index.html`, the privacy policy `privacy.html` and the store graphics), not the playable game. Store copy: `store/listing.md`. The brief requires a blind logic playtest by three non-authors before submission.
