@@ -1,6 +1,6 @@
 /* The 9:15 to Blackpool service worker: offline app shell. Bump VERSION on every release. */
-const VERSION = 'blackpool-v1.1.0';
-const ASSETS = ['./', './index.html', './style.css', './js/engine.js', './js/cases.js', './js/billing.js', './js/game.js', './manifest.webmanifest', './privacy.html', './icons/icon-192.png', './icons/icon-512.png', './icons/maskable-512.png'];
+const VERSION = 'blackpool-v1.1.1';
+const ASSETS = ['./', './index.html', './style.css', './js/engine.js', './js/cases.js', './js/billing.js', './js/more.js', './js/game.js', './manifest.webmanifest', './privacy.html', './icons/icon-192.png', './icons/more/apothecary.png', './icons/more/blackpool.png', './icons/more/cartographer.png', './icons/more/clockworkpost.png', './icons/more/elderon.png', './icons/more/harbormaster.png', './icons/more/ironhold.png', './icons/more/keepthelight.png', './icons/more/lostproperty.png', './icons/more/mended.png', './icons/more/nightbakery.png', './icons/more/nighttrain.png', './icons/more/openstall.png', './icons/more/pocketdecks.png', './icons/more/seedandsprout.png', './icons/icon-512.png', './icons/maskable-512.png'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(VERSION).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== VERSION).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', e => {

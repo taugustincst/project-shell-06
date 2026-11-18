@@ -1,7 +1,7 @@
 /* The 9:15 to Blackpool — UI, save, casebook slots. The deduction logic lives in engine.js; the cases in cases.js. */
 (function () {
 'use strict';
-const E = window.BP, CASES = window.BP_CASES, VERSION = '1.1.0', SAVE_KEY = 'blackpool.v1', BACKUP_KEY = 'blackpool.v1.backup';
+const E = window.BP, CASES = window.BP_CASES, VERSION = '1.1.1', SAVE_KEY = 'blackpool.v1', BACKUP_KEY = 'blackpool.v1.backup';
 const $ = id => document.getElementById(id);
 const caseById = {}; CASES.forEach(c => { caseById[c.id] = c; });
 const KINDS = { document: 'Document', object: 'Object', statement: 'Statement' };
@@ -142,6 +142,8 @@ function applySettings() { document.documentElement.classList.toggle('large', P.
 /* ---------- wiring ---------- */
 function init() {
   load(); applySettings(); $('about-version').textContent = VERSION;
+  // More from AugustInnovations sits under settings on the shelf, never inside a case.
+  $('more-card').hidden = !(window.MoreGames && window.MoreGames.render($('more-list'), 'blackpool'));
   document.querySelectorAll('#slots button').forEach(b => b.addEventListener('click', () => { P.slot = b.dataset.slot; save(); renderHome(); }));
   $('btn-clear-slot').addEventListener('click', () => { if (!confirm(`Rub out every entry in casebook ${P.slot}? The other casebooks are not touched.`)) return; P.books[P.slot] = {}; P.done[P.slot] = {}; save(); renderHome(); toast(`Casebook ${P.slot} is blank again.`); });
   for (const k of ['large', 'contrast']) $('opt-' + k).addEventListener('change', e => { P.settings[k] = e.target.checked; applySettings(); save(); });

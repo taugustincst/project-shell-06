@@ -1,6 +1,6 @@
 {
-  "name": "the-915-to-blackpool", "version": "1.1.0", "private": true,
+  "name": "the-915-to-blackpool", "version": "1.1.1", "private": true,
   "description": "The 9:15 to Blackpool: a casebook deduction puzzler, HTML5, packaged for Google Play.",
-  "scripts": { "validate": "node tools/validate.js", "test": "node tools/validate.js && node tests/engine.test.js && node tests/smoke.js", "icons": "node tools/make-icons.js" },
+  "scripts": { "validate": "node tools/validate.js", "test": "node tests/more.test.js && node tools/validate.js && node tests/engine.test.js && node tests/smoke.js", "icons": "node tools/make-icons.js" },
   "devDependencies": { "playwright": "^1.50.0" }
 }
