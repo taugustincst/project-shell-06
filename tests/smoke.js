@@ -19,6 +19,8 @@ const fakePlay = owned => {
   await p.addInitScript(fakePlay, true);
   p.on('pageerror', e => errs.push(e.message)); p.on('console', m => { if (m.type() === 'error') errs.push(m.text()); }); p.on('response', r => { if (r.status() >= 400) errs.push(r.status() + ' ' + r.url()); }); p.on('dialog', d => d.accept());
   await p.goto(base); await p.waitForSelector('#app:not([hidden])');
+  { const rows = await p.$$eval('#more-list a', as => as.map(a => ({ href: a.href, t: a.textContent, target: a.target, img: a.querySelector('img').naturalWidth }))); check('the shelf lists the other live games with icon and Play link', await p.isVisible('#more-card') && rows.length >= 2 && rows.every(r => r.href.startsWith('https://play.google.com/store/apps/details?id=com.taugustincst.') && !r.href.endsWith('.blackpool') && r.target === '_blank' && r.img > 0 && !/[$£€]/.test(r.t)), JSON.stringify(rows.map(r => r.href.split('.').pop()))); }
+  check('no other games are shown inside a case', (await p.locator('#screen-case .more-row, .modal .more-row').count()) === 0);
   check('the shelf lists six cases with the finale locked', (await p.locator('#case-list li').count()) === 6 && (await p.locator('#case-list li.locked').count()) === 1);
   await p.click('#case-list li:first-child button'); await p.waitForSelector('#screen-case.active');
   check('a case opens on its brief', (await p.textContent('#case-title')) === 'The 9:15 to Blackpool' && (await p.textContent('#brief-intro')).includes('jewel case'));
