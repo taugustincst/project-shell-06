@@ -1,6 +1,6 @@
 # The 9:15 to Blackpool
 
-**A casebook deduction puzzler.** One closed setting per case: a night train, a village fête, a trawler in fog, a grand hotel, a circus special, and the 9:15 again a year on. Manifests, timetables, ticket stubs, logbooks, interviews. You fill the casebook: who is who, who was where, who is lying. The book confirms only in sets of three correct entries, so brute force fails and real inference wins. Six cases. One culprit.
+**A casebook deduction puzzler.** One closed setting per case: a night train, a village fête, a trawler in fog, a grand hotel, a circus special, and the 9:15 again a year on. Manifests, timetables, ticket stubs, logbooks, interviews. You fill the casebook: who is who, who was where, who is lying. The book confirms only in sets of three correct entries and says nothing about a wrong three, so you can't probe it one entry at a time. You could still cycle a last entry once two are certain, but the book counts every three that doesn't take ink, and a case closed clean is the one that counts. Six cases. One culprit.
 
 Free on Google Play with the first case to play; one in-app purchase ($3.99) opens the other five. A book you play. No ads, fully offline.
 
